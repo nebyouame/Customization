@@ -1,4 +1,5 @@
 def after_install():
+    print('This is custom app running')
     f = open("../../../erpnext/erpnext/public/js/templates/crm_activities.html", "w")
     f.write('''
 <div class="open-activities">
