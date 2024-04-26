@@ -177,3 +177,4 @@ def after_install():
 
 ''')
     f.close()
+    os.system('sudo bench build')
