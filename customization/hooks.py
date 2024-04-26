@@ -8,6 +8,8 @@ app_description = "App that is created for customization"
 app_email = "nebyou@ttspplc.com"
 app_license = "MIT"
 
+
+after_install = "customization.crm_setup.add.after_install"
 # def after_install():
 #     load_fixtures()
 
