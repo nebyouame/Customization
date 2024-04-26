@@ -1,9 +1,24 @@
+from __future__ import unicode_literals
+import frappe
+
 app_name = "customization"
 app_title = "customization"
 app_publisher = "TTSP"
 app_description = "App that is created for customization"
 app_email = "nebyou@ttspplc.com"
 app_license = "MIT"
+
+# def after_install():
+#     load_fixtures()
+
+# def load_fixtures():
+#     frappe.get_doc({
+#         "doctype": "Data Import",
+#         "import_type": "Insert",
+#         "data": {
+#             "json": "fixtures/employees.json"
+#         }
+#     }).insert()
 
 # Includes in <head>
 # ------------------
@@ -213,3 +228,7 @@ app_license = "MIT"
 # auth_hooks = [
 # 	"customization.auth.validate"
 # ]
+
+fixtures = [
+    "Custom Field"
+]
