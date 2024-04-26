@@ -9,7 +9,7 @@ app_email = "nebyou@ttspplc.com"
 app_license = "MIT"
 
 
-after_install = "customization.crm_setup.add.after_install"
+after_install = "customization.startup.add.after_install"
 # def after_install():
 #     load_fixtures()
 
