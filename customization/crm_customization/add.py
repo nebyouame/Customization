@@ -4,7 +4,7 @@ def after_install():
     print('This is custom app running')
     current_working_directory = os.getcwd()
     print(current_working_directory)
-    f = open("../../../erpnext/erpnext/public/js/templates/crm_activities.html", "w")
+    f = open("../apps/erpnext/erpnext/public/js/templates/crm_activities.html", "w")
     f.write('''
 <div class="open-activities">
 	<div class="new-btn pb-3">
