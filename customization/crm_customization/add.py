@@ -28,4 +28,4 @@ def after_install():
     destination_file = '../apps/frappe/frappe/desk/doctype/todo/api.py'
     copy_and_replace(source_file, destination_file)
 
-    os.system('sudo bench build')
+    os.system('bench build')
