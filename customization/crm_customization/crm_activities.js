@@ -53,6 +53,7 @@ erpnext.utils.CRMActivities = class CRMActivities {
 						});
 
 					me.create_task();
+					me.create_template('default_template');
 					me.create_event();
 				}
 			},
@@ -97,6 +98,13 @@ erpnext.utils.CRMActivities = class CRMActivities {
 						reqd: 1,
 					},
 					{
+						fieldtype: 'Select',
+						label: __('Template'),
+						fieldname: 'template',
+						options: ['Non-Template','Solution Development', 'Bid Process'], // Replace with your template options
+						reqd: 1,
+					},
+					{
 						label: "Description",
 						fieldname: "description",
 						fieldtype: "Text Editor",
@@ -115,8 +123,9 @@ erpnext.utils.CRMActivities = class CRMActivities {
     						parent: data.parent,
     						allocated_to: data.allocated_to,
     						date: data.date,
+							template: data.template,
     						reference_type: me.frm.doc.doctype,
-    						reference_name: me.frm.doc.name,
+    						reference_name: me.frm.doc.name,		
 						},
 						freeze: true,
 						callback: function (r) {
@@ -134,6 +143,102 @@ erpnext.utils.CRMActivities = class CRMActivities {
 		};
 		$(".new-task-btn").click(_create_task); 
 	}
+
+	create_template(template) {
+		let me = this;
+	
+		// Function to calculate the current date plus 30 days
+		function getCurrentDatePlusThirtyDays() {
+			var today = new Date();
+			today.setDate(today.getDate() + 30);
+			return today.toISOString().split('T')[0]; // Format the date to YYYY-MM-DD
+		}
+	
+		console.log("first: " + template);
+	
+		frappe.call({
+			method: "erpnext.crm.utils.get_todos_byTemplate",
+			args: {
+				template: template
+			},
+			callback: function (r) {
+				if (!r.exc) {
+					var todos = r.message.todos;
+					console.log(todos);
+					if (todos && todos.length > 0) {
+						let promises = todos.map(function(todo) {
+							return new Promise((resolve, reject) => {
+								frappe.call({
+									method: "frappe.desk.doctype.todo.api.create_task",
+									args: {
+										description: todo.description,
+										parent: todo.parent_dict,
+										allocated_to: null,
+										date: getCurrentDatePlusThirtyDays(), // Use the function here
+										template: null,
+										reference_type: me.frm.doc.doctype,
+										reference_name: me.frm.doc.name,
+									},
+									freeze: true,
+									callback: function (r) {
+										if (!r.exc) {
+											resolve();
+											console.log("New ToDo created successfully");
+										} else {
+											reject("Error creating new ToDo: " + r.exc);
+										}
+									}
+								});
+							});
+						});
+	
+						Promise.all(promises).then(() => {
+							me.refresh();
+							// Adjust the delay as needed
+						}).catch(error => {
+							console.error(error);
+						});
+	
+					} else {
+						console.log("No ToDos found for the template:", template);
+					}
+				} else {
+					console.error("Error fetching ToDos for the template:", r.exc);
+				}
+			}
+		});
+	
+		$('.dropdown-item.new-option').click(function() {
+			var selectedValue = $(this).val();
+			console.log("Selected value: " + selectedValue);
+		
+			// Check if any task list is visible in the viewport
+			var anyTaskVisible = false;
+			$(".single-activity .task-list").each(function() {
+				var rect = this.getBoundingClientRect();
+				if (
+					rect.top < window.innerHeight &&
+					rect.bottom >= 0 &&
+					rect.left < window.innerWidth &&
+					rect.right >= 0
+				) {
+					anyTaskVisible = true;
+					return false; // Exit the loop early if any task list is visible
+				}
+			});
+		
+			if (anyTaskVisible) {
+				frappe.msgprint({
+					title: __('Warning'),
+					indicator: 'orange',
+					message: __('There is already a task created.')
+				});
+			} else {
+				me.create_template(selectedValue);
+			}
+		});	
+	}
+	
 	// create_task() {
 	// 	let me = this;
 	// 	let _create_task = () => {

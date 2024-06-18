@@ -13,6 +13,19 @@
 				</svg>
 				{{ __("New Event") }}
 			</button>
+			<div class="btn-group">
+                <button type="button" class="btn btn-sm small dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ __("Get Template") }}
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item new-option" value="Solution Development">
+                        {{ __("Solution Development") }}
+                    </button>
+                    <button class="dropdown-item new-option" value="Bid Process">
+                        {{ __("Bid Process") }}
+                    </button>
+                </div>
+            </div>
 		</span>
 	</div>
 	<div class="section-body">
@@ -20,6 +33,7 @@
 			<div class="open-section-head">
 				<span class="ml-2">{{ __("Open Tasks") }}</span>
 			</div>
+			
 			{% var parents = [] %}
 			{% for(var i=0, l=tasks.length; i<l; i++) { %}
 				{% if(tasks[i].parent_dict && !parents.includes(tasks[i].parent_dict)){parents.push(tasks[i].parent_dict)} %}
@@ -45,10 +59,7 @@
 													{{ tasks[i].description }}
 												</a>
 											</div>
-											<div class="checkbox">
-												<input type="checkbox" class="completion-checkbox"
-													name="{{ tasks[i].name }}" title="{{ __('Mark As Closed') }}">
-											</div>
+											
 										</div>
 										{% if (tasks[i].date) { %}
 											<div class="text-muted ml-1">
