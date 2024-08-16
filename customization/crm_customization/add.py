@@ -27,5 +27,17 @@ def after_install():
     source_file = '../apps/customization/customization/crm_customization/api.py'
     destination_file = '../apps/frappe/frappe/desk/doctype/todo/api.py'
     copy_and_replace(source_file, destination_file)
+    # project.py
+    source_file = '../apps/customization/customization/crm_customization/project.py'
+    destination_file = '../apps/erpnext/erpnext/projects/doctype/project/project.py'
+    copy_and_replace(source_file, destination_file)
+    # goal.py
+    source_file = '../apps/customization/customization/crm_customization/goal.py'
+    destination_file = '../apps/hrms/hrms/hr/doctype/goal/goal.py'
+    copy_and_replace(source_file, destination_file)
+    # goal.json
+    source_file = '../apps/customization/customization/crm_customization/goal.json'
+    destination_file = '../apps/hrms/hrms/hr/doctype/goal/goal.json'
+    copy_and_replace(source_file, destination_file)
 
     os.system('bench build')
