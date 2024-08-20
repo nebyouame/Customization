@@ -1009,7 +1009,7 @@
   "name": "Task-custom_assign_to",
   "no_copy": 0,
   "non_negative": 0,
-  "options": "User Link",
+  "options": "User List",
   "permlevel": 0,
   "precision": "",
   "print_hide": 0,
