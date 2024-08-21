@@ -1268,7 +1268,7 @@
   "in_list_view": 0,
   "in_preview": 0,
   "in_standard_filter": 0,
-  "insert_after": "custom_lc_amount",
+  "insert_after": "lc_amount",
   "is_system_generated": 0,
   "is_virtual": 0,
   "label": "Payment and Project Status",
