@@ -39,5 +39,9 @@ def after_install():
     source_file = '../apps/customization/customization/crm_customization/goal.json'
     destination_file = '../apps/hrms/hrms/hr/doctype/goal/goal.json'
     copy_and_replace(source_file, destination_file)
+    # leave_policy_assignment.py
+    source_file = '../apps/customization/customization/crm_customization/leave_policy_assignment.py'
+    destination_file = '../apps/hrms/hrms/hr/doctype/leave_policy_assignment/leave_policy_assignment.py'
+    copy_and_replace(source_file, destination_file)
 
     os.system('bench build')
